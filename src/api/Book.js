@@ -3,7 +3,7 @@ import { endpoints, KEY } from './Constants';
 export default class Book{
 
     _errorResponse(status=500, message){
-        const msg = message ? message : 'Ocorreu um erro de comunicação com a API do Github.';
+        const msg = message ? message : 'Ocorreu um erro de comunicação com a API do Google.';
         return { error: true, httpStatus: status, message: msg };
     }
 
@@ -31,7 +31,7 @@ export default class Book{
     }
 
     async searchList(search){
-        var url = endpoints.book.listSearch + search + "&key=" + KEY;
+        var url = endpoints.book.listSearch + search + "&maxResults=40&key=" + KEY;
 
         try{
             const response = await fetch(url);

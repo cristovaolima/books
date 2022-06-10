@@ -21,22 +21,33 @@ export default function Home() {
   const [seachBook, setSeachBook] = useState('');
   const [books, setBooks] = useState([]);
   const [initialBooks, setInitialBooks] = useState([]);
-  const [totalBooks, setTotalBooks] = useState(-1);
   const [offSet, setOffset] = useState(0);
+  const [page, setPage] = useState(0);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    let _books = initialBooks.slice(offSet, offSet + 11)
-    setBooks(_books);       
-  }, [offSet]);
+    paginate();     
+  }, [offSet, initialBooks]);
+
+  function paginate(){
+    let _books = initialBooks.slice(0, 12);
+    setBooks(_books);
+    setPage(initialBooks.length / page);
+  }
 
   async function seach(){
     if(seachBook !== ''){
+      setLoading(true);
       const responseJson = await ApiService.book.searchList(seachBook);
-      setInitialBooks(responseJson.items);
-      setTotalBooks(responseJson.totalItems);
-      setOffset(0);
-      console.log(responseJson);
+      if (responseJson.error) {
+        alert(responseJson.message);  
+        setLoading(false);
+        return;
+      } else {
+        setInitialBooks(responseJson.items);
+        setOffset(0);
+        setLoading(false);
+      }
     }    
   }
 
@@ -59,7 +70,8 @@ export default function Home() {
               </Button>
           </InputGroup>
           <br/>
-          <p>{seachBook !== '' && totalBooks !== -1 ? "Results " + totalBooks : null }</p>
+          <p>{seachBook !== '' && books.length !== 0 ? 
+              "Maximum 40 results " : null }</p>
           <Row>
             <CardGroup>
               {books && books.map(book => 
@@ -71,10 +83,10 @@ export default function Home() {
           </Row>
           <br/>
           <div className="Pagination">
-          {seachBook !== '' && totalBooks !== -1 ? 
+          {seachBook !== '' && books.length !== 0 ? 
             <PaginationBook 
               limit={12} 
-              total={totalBooks} 
+              total={initialBooks.length} 
               offset={offSet} 
               setOffset={setOffset}/> 
             : null}  

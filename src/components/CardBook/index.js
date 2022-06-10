@@ -7,8 +7,7 @@ import {
     CardBody, 
     Button,
     CardTitle,
-    CardSubtitle,
-    CardText, 
+    CardSubtitle
   } from 'reactstrap';
 
 export default function CardBook({book}) {
@@ -28,12 +27,10 @@ export default function CardBook({book}) {
                     </CardTitle>
                     <CardSubtitle
                       className="mb-2 text-muted"
-                      tag="h6"
-                    >
-                      {/* {book.volumeInfo.authors[0]} */}
+                      tag="h6">
                       {book.volumeInfo.authors && book.volumeInfo.authors.map((author, index) =>
-                  index < (book.volumeInfo.authors.length - 1) ? author + ', ' : author                  
-                )}
+                        index < (book.volumeInfo.authors.length - 1) ? author + ', ' : author                  
+                        )}
                     </CardSubtitle>
                     <Link to={'/book-details/' + book.id}>
                         <Button color="primary">

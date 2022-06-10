@@ -5,7 +5,7 @@ import {
     PaginationLink 
   } from 'reactstrap';
 
-const MAX_ITEMS = 5;
+const MAX_ITEMS = 3;
 const MAX_LEFT = (MAX_ITEMS - 1) / 2;
 
 export default function PaginationBook({limit, total, offset, setOffset}) {
@@ -20,27 +20,28 @@ export default function PaginationBook({limit, total, offset, setOffset}) {
   return (
     <div>
       <Pagination aria-label="Page navigation example" size="lg">
-      <PaginationItem 
-        onClick={() => onPage(current - 1)} 
-        disabled={current === 1}>
-        <PaginationLink first/>
-      </PaginationItem>
-      {Array.from({length: Math.min(MAX_ITEMS, pages)})
-        .map((_, index) => index + first)
-        .map((page) => (
-          <PaginationItem key={page}>
-            <PaginationLink onClick={() => onPage(page)}>
-              {page}
-            </PaginationLink>
-          </PaginationItem>
-        ))
-      }
-      <PaginationItem 
-        onClick={() => onPage(current + 1)} 
-        disabled={current === pages}>
-        <PaginationLink last/>
-      </PaginationItem>
-    </Pagination> 
+        {current !== 1 ?
+          <PaginationItem onClick={() => onPage(current - 1)}>
+            <PaginationLink first/>
+          </PaginationItem> 
+        : null}
+        {Array.from({length: Math.min(MAX_ITEMS, pages)})
+          .map((_, index) => index + first)
+          .map((page) => (
+            <PaginationItem key={page}>
+              <PaginationLink onClick={() => onPage(page)}>
+                {page}
+              </PaginationLink>
+            </PaginationItem>
+          ))
+        }
+        {current !== pages ?
+          <PaginationItem 
+            onClick={() => onPage(current + 1)}>
+            <PaginationLink last/>
+          </PaginationItem> 
+        : null}
+      </Pagination> 
    </div>
   );
 }

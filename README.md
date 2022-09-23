@@ -1,6 +1,6 @@
 # Desafio técnico front-end React
 
-Desafio técnico seguindo os requsitos funcionais.
+Desafio técnico seguindo os requisitos funcionais.
 
 **Requisitos funcionais**
 * Como usuário gostaria de digitar algumas palavras e ver uma lista de livros que tenha relação com a minha busca;
